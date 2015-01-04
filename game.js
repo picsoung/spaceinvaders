@@ -8,9 +8,11 @@ BasicGame.Game.prototype = {
 
         this.load.image('playerBullet','assets/invaders/bullet.png')
         this.load.image('explosion','assets/invaders/explosion.png');
-        this.load.image('shield_top_left','assets/shield/top_left.png');
-        this.load.image('shield_top_right','assets/shield/top_right.png');
-        this.load.image('shield_plain','assets/shield/plain.png');
+        this.load.spritesheet('shield_top_left','assets/shield/top_left.png',40,33,2);
+        this.load.spritesheet('shield_top_right','assets/shield/top_right.png',40,33,2);
+        this.load.spritesheet('shield_plain','assets/shield/plain.png',40,33,2);
+        this.load.spritesheet('shield_bottom_left','assets/shield/bottom_left.png',40,33,2);
+        this.load.spritesheet('shield_bottom_right','assets/shield/bottom_right.png',40,33,2);
     },
 
     create:function(){
@@ -70,33 +72,85 @@ BasicGame.Game.prototype = {
     },
 
     setupShields: function(){
+        var SHIELD_LIFE = 2
         this.shield = this.add.group();
 
-        this.shield_top_left = this.add.sprite(100,this.game.height-150,'shield_top_left');
-        this.shield_top_left.anchor.setTo(0.5,0.5);
+        this.shield_top_left = this.add.sprite(100,this.game.height-150,'shield_top_left',0);
+        this.shield_top_left.enableBody = true;
         this.physics.enable(this.shield_top_left,Phaser.Physics.ARCADE);
+        this.shield_top_left.health = SHIELD_LIFE;
+        this.shield_top_left.anchor.setTo(0.5,0.5);
         this.shield_top_left.body.collideWorldBounds = true;
         this.shield_top_left.scale.set(0.5 , 0.5 );
 
-        this.shield_top_middle = this.add.sprite(120,this.game.height-150,'shield_plain');
+        this.shield_top_middle = this.add.sprite(120,this.game.height-150,'shield_plain',0);
+        this.shield_top_middle.enableBody = true;
+        this.shield_top_middle.health = SHIELD_LIFE;
         this.shield_top_middle.anchor.setTo(0.5,0.5);
         this.physics.enable(this.shield_top_middle,Phaser.Physics.ARCADE);
         this.shield_top_middle.body.collideWorldBounds = true;
         this.shield_top_middle.scale.set(0.5 , 0.5 );
 
-        this.shield_top_right = this.add.sprite(140,this.game.height-150,'shield_top_right');
+        this.shield_top_right = this.add.sprite(140,this.game.height-150,'shield_top_right',0);
+        this.shield_top_right.enableBody = true;
+        this.shield_top_right.health = SHIELD_LIFE;
         this.shield_top_right.anchor.setTo(0.5,0.5);
         this.physics.enable(this.shield_top_right,Phaser.Physics.ARCADE);
         this.shield_top_right.body.collideWorldBounds = true;
         this.shield_top_right.scale.set(0.5 , 0.5 );
 
+        this.shield_middle_left = this.add.sprite(100,this.game.height-150+16,'shield_plain',0);
+        this.shield_middle_left.enableBody = true;
+        this.shield_middle_left.health = SHIELD_LIFE;
+        this.shield_middle_left.anchor.setTo(0.5,0.5);
+        this.physics.enable(this.shield_middle_left,Phaser.Physics.ARCADE);
+        this.shield_middle_left.body.collideWorldBounds = true;
+        this.shield_middle_left.scale.set(0.5 , 0.5 );
+
+        this.shield_middle_middle = this.add.sprite(120,this.game.height-150+16,'shield_plain',0);
+        this.shield_middle_middle.enableBody = true;
+        this.shield_middle_middle.health = SHIELD_LIFE;
+        this.shield_middle_middle.anchor.setTo(0.5,0.5);
+    this.physics.enable(this.shield_middle_middle,Phaser.Physics.ARCADE);
+        this.shield_middle_middle.body.collideWorldBounds = true;
+        this.shield_middle_middle.scale.set(0.5 , 0.5);
+
+        this.shield_middle_right = this.add.sprite(140,this.game.height-150+16,'shield_plain',0);
+        this.shield_middle_right.enableBody = true;
+        this.shield_middle_right.health = SHIELD_LIFE;
+        this.shield_middle_right.anchor.setTo(0.5,0.5);
+    this.physics.enable(this.shield_middle_right,Phaser.Physics.ARCADE);
+        this.shield_middle_right.body.collideWorldBounds = true;
+        this.shield_middle_right.scale.set(0.5 , 0.5);
+
+        this.shield_bottom_left = this.add.sprite(100,this.game.height-150+32,'shield_bottom_left',0);
+        this.shield_bottom_left.enableBody = true;
+        this.shield_bottom_left.health = SHIELD_LIFE;
+        this.shield_bottom_left.anchor.setTo(0.5,0.5);
+    this.physics.enable(this.shield_bottom_left,Phaser.Physics.ARCADE);
+        this.shield_bottom_left.body.collideWorldBounds = true;
+        this.shield_bottom_left.scale.set(0.5 , 0.5);
+
+        this.shield_bottom_right = this.add.sprite(140,this.game.height-150+32,'shield_bottom_right',0);
+        this.shield_bottom_right.enableBody = true;
+        this.shield_bottom_right.health = SHIELD_LIFE;
+        this.shield_bottom_right.anchor.setTo(0.5,0.5);
+    this.physics.enable(this.shield_bottom_right,Phaser.Physics.ARCADE);
+        this.shield_bottom_right.body.collideWorldBounds = true;
+        this.shield_bottom_right.scale.set(0.5 , 0.5);
+
         this.shield.add(this.shield_top_left);
         this.shield.add(this.shield_top_right);
         this.shield.add(this.shield_top_middle);
+        this.shield.add(this.shield_middle_left);
+        this.shield.add(this.shield_middle_middle);
+        this.shield.add(this.shield_middle_right);
+        this.shield.add(this.shield_bottom_left);
+        this.shield.add(this.shield_bottom_right);
     },
 
     setupPlayer: function(){
-        this.player = this.add.sprite(this.game.width/2,this.game.height -100,'player')
+        this.player = this.add.sprite(this.game.width/2,this.game.height -70,'player')
         this.player.anchor.setTo(0.5,0.5);
         this.physics.enable(this.player,Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
@@ -209,6 +263,10 @@ BasicGame.Game.prototype = {
         this.playerBullet.setAll('anchor.y',0.5)
         this.playerBullet.setAll('outOfBoundsKill', true);
         this.playerBullet.setAll('checkWorldBounds', true);
+
+        this.nextShotAt = 0;
+        var SHOT_DELAY = Phaser.Timer.SECOND * 0.1
+        this.shotDelay = SHOT_DELAY;
     },
 
     processPlayerInput:function(){
@@ -225,6 +283,12 @@ BasicGame.Game.prototype = {
     },
 
     fire:function(){
+        if(!this.player.alive || this.nextShotAt > this.time.now){
+            return;
+        }
+
+        this.nextShotAt = this.time.now + this.shotDelay;
+
         var bullet;
         if(this.playerBullet.countDead()===0){
             return;
@@ -285,6 +349,26 @@ BasicGame.Game.prototype = {
 
         this.physics.arcade.overlap(    this.ground,[this.invaderAPool,this.invaderBPool,this.invaderCPool],this.groundHit,null,this
         );
+
+        this.physics.arcade.overlap(
+            this.playerBullet,this.shield,this.shieldHit,null,this
+        )
+    },
+
+    shieldHit:function(bullet,shieldObject){
+        bullet.kill()
+        var CRASH_DAMAGE = 1;
+        console.log("SHIELDHIT")
+        this.damageShield(shieldObject,CRASH_DAMAGE);
+    },
+
+    damageShield:function(shield,damage){
+        shield.damage(damage);
+        if (shield.alive) {
+            shield.frame = 1;
+        } else {
+            console.log("dead");
+        }
     },
 
     enemyHit: function(bullet,enemy){
